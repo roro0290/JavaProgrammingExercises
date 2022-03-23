@@ -1,4 +1,4 @@
-package com.MyProgrammingExercises.JavaGUI;
+package com.MyProgrammingExercises.javaGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
