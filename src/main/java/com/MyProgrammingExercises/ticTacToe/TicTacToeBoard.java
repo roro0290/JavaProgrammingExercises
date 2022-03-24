@@ -1,5 +1,9 @@
 package com.MyProgrammingExercises.ticTacToe;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.swing.*;
 
 /*
@@ -16,6 +20,9 @@ If there is a match of 3, show success. If all 9 boxes are filled, show No Win
 - clear board
  */
 
+@Setter
+@Getter
+@NoArgsConstructor
 public class TicTacToeBoard extends JFrame{
     private JTextField textField1;
     private JPanel mainPanel;
@@ -29,7 +36,7 @@ public class TicTacToeBoard extends JFrame{
     private JTextField textField9;
     private JButton submit;
     private JLabel playerTurn;
-    private JLabel displayErrMsg;
+    private JLabel displayMsg;
 
     public static void main(String[] args) {
 
