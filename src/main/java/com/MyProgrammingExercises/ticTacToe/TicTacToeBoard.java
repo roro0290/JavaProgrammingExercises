@@ -37,12 +37,4 @@ public class TicTacToeBoard extends JFrame{
     private JButton submit;
     private JLabel playerTurn;
     private JLabel displayMsg;
-
-    public static void main(String[] args) {
-
-        TicTacToeBoard myBoard = new TicTacToeBoard();
-        myBoard.setContentPane(myBoard.mainPanel);
-        myBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myBoard.setVisible(true);
-    }
 }
