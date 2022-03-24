@@ -3,6 +3,7 @@ package com.MyProgrammingExercises.ticTacToe;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 @Service
 public class UtilMethods {
@@ -19,7 +20,7 @@ public class UtilMethods {
     Update the boardArray
     Check boardArray to see if it meets the conditions
      */
-    public static void update2DArray(TicTacToeBoard myBoard,String[][] boardArray){
+    static void update2DArray(TicTacToeBoard myBoard,String[][] boardArray){
         // ROW 1
         boardArray[0][0] = myBoard.getTextField1().getText();
         boardArray[0][1] = myBoard.getTextField2().getText();
@@ -36,4 +37,28 @@ public class UtilMethods {
         boardArray[2][2] = myBoard.getTextField9().getText();
     }
 
+    /*
+    Check: Only one input allowed
+    Filter variables that are not empty ("")
+    Get the count of non-empty variables
+     */
+    static boolean checkInputFromUserIsOne(String[][] boardArray){
+        int inputCount = 0;
+        for(String[] row:boardArray){
+            for(String value:row){
+                inputCount += !value.equals("") ? 1 : 0;
+            }
+        }
+        return inputCount==1;
+    }
+
+    public static void playerClickedSubmit(TicTacToeBoard myBoard,String[][] boardArray){
+        update2DArray(myBoard,boardArray);
+        boolean checkOneInput = checkInputFromUserIsOne(boardArray);
+        if(checkOneInput){
+            myBoard.getDisplayMsg().setText("Great! Only one input");
+        }else{
+            myBoard.getDisplayMsg().setText("Please provide only one input");
+        }
+    }
 }

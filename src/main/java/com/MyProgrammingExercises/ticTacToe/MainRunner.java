@@ -25,8 +25,7 @@ public class MainRunner {
         myBoard.getSubmit().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                utilMethods.update2DArray(myBoard,board2DArray);
-                myBoard.getDisplayMsg().setText("clicked");
+                utilMethods.playerClickedSubmit(myBoard,board2DArray);
             }
         });
     }

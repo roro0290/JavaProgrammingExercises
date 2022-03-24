@@ -15,6 +15,7 @@ Necessary checks:
 - depending on the turn, input should be X or O (use playerTurn label to display which player's turn)
 - if either one condition is not met, display message to be shown (use displayMsg label)
 Use a 2D array to track the input
+- if input is valid, then value should be stored and cannot be changed
 If there is a match of 3, show success. If all 9 boxes are filled, show No Win
 - hide playerTurn label
 - use displayMsg
