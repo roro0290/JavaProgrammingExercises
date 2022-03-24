@@ -20,6 +20,7 @@ If there is a match of 3, show success. If all 9 boxes are filled, show No Win
 - hide playerTurn label
 - use displayMsg
 - clear board
+Reset Board Function
  */
 
 @Setter
@@ -39,4 +40,5 @@ public class TicTacToeBoard extends JFrame{
     private JButton submit;
     private JLabel playerTurn;
     private JLabel displayMsg;
+    private JButton resetBtn;
 }
