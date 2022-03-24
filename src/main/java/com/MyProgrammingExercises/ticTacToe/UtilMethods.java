@@ -1,9 +1,11 @@
 package com.MyProgrammingExercises.ticTacToe;
 
+import com.MyProgrammingExercises.ticTacToe.exception.MoreThanOneInputFromPlayer;
+import com.MyProgrammingExercises.ticTacToe.exception.NoInputFromPlayer;
+import com.MyProgrammingExercises.ticTacToe.exception.WrongInputFormat;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
-import java.util.Arrays;
 
 @Service
 public class UtilMethods {
@@ -43,42 +45,48 @@ public class UtilMethods {
     Check: Only one input allowed
     Filter variables that are not empty ("")
     Get the count of non-empty variables
+    It will move to nect method to check format only if there is one input
      */
-    static boolean checkInputFromUserIsOne(String[][] boardArray){
+    static boolean checkInputFromUserIsOne(TicTacToeBoard myBoard, String[][] boardArray) throws NoInputFromPlayer {
         int inputCount = 0;
         for(String[] row:boardArray){
             for(String value:row){
                 inputCount += !value.equals("") ? 1 : 0;
             }
         }
+        if(inputCount==0){
+            throw new NoInputFromPlayer(myBoard.getDisplayMsg());
+        }else if(inputCount>1){
+            throw new MoreThanOneInputFromPlayer(myBoard.getDisplayMsg());
+        }
         return inputCount==1;
     }
 
-    static boolean checkInputFormatIsCorrect(String[][] boardArray){
+    /*
+    Method to check that input format is either X or O (ignore case)
+     */
+    static void checkInputFormatIsCorrect(TicTacToeBoard myBoard, String[][] boardArray){
         boolean correctFormat = false;
         for(String[] row:boardArray){
             for(String value:row){
-                correctFormat = value.equalsIgnoreCase("X")
-                        || value.equalsIgnoreCase("O");
-                if(correctFormat){
+                if(!value.equals("")){
+                    correctFormat = value.equalsIgnoreCase("X")
+                            || value.equalsIgnoreCase("O");
                     break;
                 }
             }
-            if(correctFormat){
-                break;
-            }
+        } // end For Loop
+        if(!correctFormat){
+            throw new WrongInputFormat(myBoard.getDisplayMsg());
+        }else{
+            myBoard.getDisplayMsg().setText("next player");
         }
-        return correctFormat;
+
     }
 
     public static void playerClickedSubmit(TicTacToeBoard myBoard,String[][] boardArray){
         update2DArray(myBoard,boardArray);
-        boolean checkOneInput = checkInputFromUserIsOne(boardArray);
-        if(checkOneInput){
-            boolean inputFormat = checkInputFormatIsCorrect(boardArray);
-            myBoard.getDisplayMsg().setText(String.valueOf(inputFormat));
-        }else{
-            myBoard.getDisplayMsg().setText("Please provide only one input");
-        }
+        checkInputFromUserIsOne(myBoard,boardArray);
+        checkInputFormatIsCorrect(myBoard,boardArray);
     }
 }
