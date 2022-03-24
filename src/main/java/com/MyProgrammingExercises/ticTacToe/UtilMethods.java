@@ -8,6 +8,8 @@ import java.util.Arrays;
 @Service
 public class UtilMethods {
 
+    static int playerTurnCount = 0;
+
     public static void displayMethod(TicTacToeBoard myBoard){
         myBoard.setContentPane(myBoard.getMainPanel());
         myBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,11 +54,29 @@ public class UtilMethods {
         return inputCount==1;
     }
 
+    static boolean checkInputFormatIsCorrect(String[][] boardArray){
+        boolean correctFormat = false;
+        for(String[] row:boardArray){
+            for(String value:row){
+                correctFormat = value.equalsIgnoreCase("X")
+                        || value.equalsIgnoreCase("O");
+                if(correctFormat){
+                    break;
+                }
+            }
+            if(correctFormat){
+                break;
+            }
+        }
+        return correctFormat;
+    }
+
     public static void playerClickedSubmit(TicTacToeBoard myBoard,String[][] boardArray){
         update2DArray(myBoard,boardArray);
         boolean checkOneInput = checkInputFromUserIsOne(boardArray);
         if(checkOneInput){
-            myBoard.getDisplayMsg().setText("Great! Only one input");
+            boolean inputFormat = checkInputFormatIsCorrect(boardArray);
+            myBoard.getDisplayMsg().setText(String.valueOf(inputFormat));
         }else{
             myBoard.getDisplayMsg().setText("Please provide only one input");
         }

@@ -9,7 +9,8 @@ import java.awt.event.ActionListener;
 /*
 Flow:
 1. Display page using displayMethod(myBoard)
-2. Click submit --> call update 2DArray method
+2. Click submit --> call playerClickedSubmit method
+3. playerClickedSubmit --> update2DArray -->
  */
 public class MainRunner {
 
