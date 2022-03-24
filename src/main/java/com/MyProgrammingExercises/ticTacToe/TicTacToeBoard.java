@@ -3,6 +3,7 @@ package com.MyProgrammingExercises.ticTacToe;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 
@@ -22,7 +23,7 @@ If there is a match of 3, show success. If all 9 boxes are filled, show No Win
 
 @Setter
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor @Component
 public class TicTacToeBoard extends JFrame{
     private JTextField textField1;
     private JPanel mainPanel;

@@ -1,13 +1,20 @@
 package com.MyProgrammingExercises.ticTacToe;
 
-import javax.swing.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.swing.*;
+/*
+Flow:
+1.
+ */
 public class MainRunner {
+
+    @Autowired
+    static UtilMethods utilMethods;
+
     public static void main(String[] args) {
 
         TicTacToeBoard myBoard = new TicTacToeBoard();
-        myBoard.setContentPane(myBoard.getMainPanel());
-        myBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        myBoard.setVisible(true);
+        utilMethods.displayMethod(myBoard);
     }
 }
