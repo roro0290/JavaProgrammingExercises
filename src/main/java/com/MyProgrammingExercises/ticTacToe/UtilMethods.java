@@ -49,14 +49,15 @@ public class UtilMethods {
     It will move to next method to check format only if there is one input else throw exception
     Valid input is sent to the next method
      */
-    static String checkNumOfInputFromPlayer(TicTacToeBoard myBoard, UserInput[][] boardArray) throws NoInputFromPlayer {
+    static UserInput checkNumOfInputFromPlayer(TicTacToeBoard myBoard, UserInput[][] boardArray) throws NoInputFromPlayer {
         int inputCount = 0;
-        String singleUserInput = "";
+        UserInput singleUserInput = new UserInput();
         for(UserInput[] row:boardArray){
             for(UserInput value:row){
                 inputCount += !value.getInputValue().equals("") ? 1 : 0;
                 if(!value.getInputValue().equals("")){
-                    singleUserInput = value.getInputValue();
+                    singleUserInput.setInputValue(value.getInputValue());
+                    singleUserInput.setPosition(value.getPosition());
                 }
             }
         }
@@ -71,8 +72,8 @@ public class UtilMethods {
     /*
     Method to check that input format is either X or O (ignore case)
      */
-    static void checkInputFormatIsCorrect(TicTacToeBoard myBoard, String singleUserInput){
-        boolean correctFormat = singleUserInput.equalsIgnoreCase("X") || singleUserInput.equals("O");
+    static void checkInputFormatIsCorrect(TicTacToeBoard myBoard, UserInput singleUserInput){
+        boolean correctFormat = singleUserInput.getInputValue().equalsIgnoreCase("X") || singleUserInput.getInputValue().equalsIgnoreCase("O");
         if(!correctFormat){
             throw new WrongInputFormat(myBoard.getDisplayMsg());
         }else{
@@ -80,10 +81,18 @@ public class UtilMethods {
         }
     }
 
+    /*
+    This method is called only after the input is validated
+    Store the boardArray with this value and that input cannot be changed anymore
+     */
+    static void inputIsValid(TicTacToeBoard myBoard,UserInput[][] boardArray){
+
+    }
+
     public static void playerClickedSubmit(TicTacToeBoard myBoard, UserInput[][] boardArray){
         update2DArray(myBoard,boardArray);
-        String singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
+        UserInput singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
         checkInputFormatIsCorrect(myBoard,singleUserInput);
-        
+        inputIsValid(myBoard,boardArray);
     }
 }
