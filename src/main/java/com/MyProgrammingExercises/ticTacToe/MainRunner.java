@@ -2,6 +2,8 @@ package com.MyProgrammingExercises.ticTacToe;
 
 import com.MyProgrammingExercises.ticTacToe.exception.MoreThanOneInputFromPlayer;
 import com.MyProgrammingExercises.ticTacToe.exception.NoInputFromPlayer;
+import com.MyProgrammingExercises.ticTacToe.exception.WrongInputFormat;
+import com.MyProgrammingExercises.ticTacToe.model.UserInput;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
@@ -27,7 +29,7 @@ public class MainRunner {
         TicTacToeBoard myBoard = new TicTacToeBoard();
         utilMethods.displayMethod(myBoard);
 
-        String[][] board2DArray = new String[3][3];
+        UserInput[][] board2DArray = new UserInput[3][3];
         myBoard.getSubmit().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -36,6 +38,8 @@ public class MainRunner {
                 }catch(NoInputFromPlayer noInputFromPlayerException){
                     // logging
                 }catch(MoreThanOneInputFromPlayer moreThanOneInputFromPlayerException){
+                    // logging
+                }catch(WrongInputFormat wrongInputFormatException){
                     // logging
                 }
 
