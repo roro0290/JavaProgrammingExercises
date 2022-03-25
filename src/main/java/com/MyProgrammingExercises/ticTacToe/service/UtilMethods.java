@@ -66,11 +66,46 @@ public class UtilMethods {
     This method is called only after the input is validated
     Store the boardArray with this value and that input cannot be changed anymore
      */
-    static void inputIsValid(TicTacToeBoard myBoard,UserInput singleUserInput){
+    static UserInput[][] inputIsValid(UserInput[][] boardArray,UserInput singleUserInput){
         switch (singleUserInput.getPosition()){
-            case 1:
-                myBoard.getTextField1().setEditable(false);
+            case 1: {
+                boardArray[0][0].setEditable(false);
+                break;
+            }
+            case 2:{
+                boardArray[0][1].setEditable(false);
+                break;
+            }
+            case 3:{
+                boardArray[0][2].setEditable(false);
+                break;
+            }
+            case 4:{
+                boardArray[1][0].setEditable(false);
+                break;
+            }
+            case 5:{
+                boardArray[1][1].setEditable(false);
+                break;
+            }
+            case 6:{
+                boardArray[1][2].setEditable(false);
+                break;
+            }
+            case 7:{
+                boardArray[2][0].setEditable(false);
+                break;
+            }
+            case 8:{
+                boardArray[2][1].setEditable(false);
+                break;
+            }
+            case 9:{
+                boardArray[2][2].setEditable(false);
+                break;
+            }
         }//end switch
+        return boardArray;
     }
 
     /*
@@ -83,6 +118,7 @@ public class UtilMethods {
         boardArray = BoardTableMapper.mapBoardToBoardArray(myBoard,boardArray);
         UserInput singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
         checkInputFormatIsCorrect(myBoard,singleUserInput);
-        //inputIsValid(myBoard,singleUserInput);
+        boardArray = inputIsValid(boardArray, singleUserInput);
+        BoardTableMapper.boardArrayToBoard(myBoard, boardArray);
     }
 }
