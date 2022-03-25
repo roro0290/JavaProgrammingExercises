@@ -1,9 +1,11 @@
-package com.MyProgrammingExercises.ticTacToe;
+package com.MyProgrammingExercises.ticTacToe.service;
 
+import com.MyProgrammingExercises.ticTacToe.TicTacToeBoard;
 import com.MyProgrammingExercises.ticTacToe.exception.MoreThanOneInputFromPlayer;
 import com.MyProgrammingExercises.ticTacToe.exception.NoInputFromPlayer;
 import com.MyProgrammingExercises.ticTacToe.exception.WrongInputFormat;
 import com.MyProgrammingExercises.ticTacToe.model.UserInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -11,35 +13,12 @@ import javax.swing.*;
 @Service
 public class UtilMethods {
 
-    static int playerTurnCount = 0;
+    static UserInput[][] boardArray;
 
     public static void displayMethod(TicTacToeBoard myBoard){
         myBoard.setContentPane(myBoard.getMainPanel());
         myBoard.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         myBoard.setVisible(true);
-    }
-
-    /*
-    Input board and boardArray
-    Fetch details from board
-    Update the boardArray
-    Check boardArray to see if it meets the conditions
-     */
-    static void update2DArray(TicTacToeBoard myBoard, UserInput[][] boardArray){
-        // ROW 1
-        boardArray[0][0] = new UserInput(myBoard.getTextField1().getText(),1);
-        boardArray[0][1] = new UserInput(myBoard.getTextField2().getText(),2);
-        boardArray[0][2] = new UserInput(myBoard.getTextField3().getText(),3);
-
-        // ROW 2
-        boardArray[1][0] = new UserInput(myBoard.getTextField4().getText(),4);
-        boardArray[1][1] = new UserInput(myBoard.getTextField5().getText(),5);
-        boardArray[1][2] = new UserInput(myBoard.getTextField6().getText(),6);
-
-        // ROW 3
-        boardArray[2][0] = new UserInput(myBoard.getTextField7().getText(),7);
-        boardArray[2][1] = new UserInput(myBoard.getTextField8().getText(),8);
-        boardArray[2][2] = new UserInput(myBoard.getTextField9().getText(),9);
     }
 
     /*
@@ -54,10 +33,12 @@ public class UtilMethods {
         UserInput singleUserInput = new UserInput();
         for(UserInput[] row:boardArray){
             for(UserInput value:row){
-                inputCount += !value.getInputValue().equals("") ? 1 : 0;
-                if(!value.getInputValue().equals("")){
-                    singleUserInput.setInputValue(value.getInputValue());
-                    singleUserInput.setPosition(value.getPosition());
+                if(value!=null){
+                    inputCount += value.getInputValue().equals("") ? 0 : 1;
+                    if(!value.getInputValue().equals("")){
+                        singleUserInput.setInputValue(value.getInputValue());
+                        singleUserInput.setPosition(value.getPosition());
+                    }
                 }
             }
         }
@@ -85,14 +66,23 @@ public class UtilMethods {
     This method is called only after the input is validated
     Store the boardArray with this value and that input cannot be changed anymore
      */
-    static void inputIsValid(TicTacToeBoard myBoard,UserInput[][] boardArray){
-
+    static void inputIsValid(TicTacToeBoard myBoard,UserInput singleUserInput){
+        switch (singleUserInput.getPosition()){
+            case 1:
+                myBoard.getTextField1().setEditable(false);
+        }//end switch
     }
 
-    public static void playerClickedSubmit(TicTacToeBoard myBoard, UserInput[][] boardArray){
-        update2DArray(myBoard,boardArray);
+    /*
+    This method is called from the MainRunner when the player clicks submit
+     */
+    public static void playerClickedSubmit(TicTacToeBoard myBoard, int playerTurnCount){
+        if(playerTurnCount==1){
+            boardArray = BoardTableMapper.create2DBoardArray();
+        }
+        boardArray = BoardTableMapper.mapBoardToBoardArray(myBoard,boardArray);
         UserInput singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
         checkInputFormatIsCorrect(myBoard,singleUserInput);
-        inputIsValid(myBoard,boardArray);
+        //inputIsValid(myBoard,singleUserInput);
     }
 }

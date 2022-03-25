@@ -25,7 +25,7 @@ Reset Board Function
 
 @Setter
 @Getter
-@NoArgsConstructor @Component
+@NoArgsConstructor
 public class TicTacToeBoard extends JFrame{
     private JTextField textField1;
     private JPanel mainPanel;

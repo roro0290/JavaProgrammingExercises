@@ -9,4 +9,10 @@ import lombok.Setter;
 public class UserInput {
     private String inputValue;
     private int position;
+    private boolean editable;
+
+    public UserInput(int position,boolean editable){
+        this.position = position;
+        this.editable = editable;
+    }
 }
