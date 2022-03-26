@@ -33,7 +33,7 @@ public class UtilMethods {
         UserInput singleUserInput = new UserInput();
         for(UserInput[] row:boardArray){
             for(UserInput value:row){
-                if(value!=null){
+                if(value!=null && value.isEditable()==true){
                     inputCount += value.getInputValue().equals("") ? 0 : 1;
                     if(!value.getInputValue().equals("")){
                         singleUserInput.setInputValue(value.getInputValue());
