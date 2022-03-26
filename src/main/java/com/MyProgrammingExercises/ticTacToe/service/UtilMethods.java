@@ -5,7 +5,6 @@ import com.MyProgrammingExercises.ticTacToe.exception.MoreThanOneInputFromPlayer
 import com.MyProgrammingExercises.ticTacToe.exception.NoInputFromPlayer;
 import com.MyProgrammingExercises.ticTacToe.exception.WrongInputFormat;
 import com.MyProgrammingExercises.ticTacToe.model.UserInput;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -14,6 +13,8 @@ import javax.swing.*;
 public class UtilMethods {
 
     static UserInput[][] boardArray;
+
+    static int validInputCount = 0;
 
     public static void displayMethod(TicTacToeBoard myBoard){
         myBoard.setContentPane(myBoard.getMainPanel());
@@ -57,8 +58,6 @@ public class UtilMethods {
         boolean correctFormat = singleUserInput.getInputValue().equalsIgnoreCase("X") || singleUserInput.getInputValue().equalsIgnoreCase("O");
         if(!correctFormat){
             throw new WrongInputFormat(myBoard.getDisplayMsg());
-        }else{
-            myBoard.getDisplayMsg().setText("next player");
         }
     }
 
@@ -105,6 +104,7 @@ public class UtilMethods {
                 break;
             }
         }//end switch
+        validInputCount+=1;
         return boardArray;
     }
 
@@ -119,6 +119,11 @@ public class UtilMethods {
         UserInput singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
         checkInputFormatIsCorrect(myBoard,singleUserInput);
         boardArray = inputIsValid(boardArray, singleUserInput);
+        if(validInputCount%2==0){
+            myBoard.getPlayerTurn().setText("Player 1, please input X");
+        }else{
+            myBoard.getPlayerTurn().setText("Player 2, please input O");
+        }
         BoardTableMapper.boardArrayToBoard(myBoard, boardArray);
     }
 
