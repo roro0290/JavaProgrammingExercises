@@ -132,7 +132,11 @@ public class UtilMethods {
                 myBoard.getPlayerTurn().setText("Player 2");
             }
             myBoard.getDisplayMsg().setText("GAME WON");
+        }else if(playerTurn==8){
+            myBoard.getPlayerTurn().setText("");
+            myBoard.getDisplayMsg().setText("NO WINNERS. PLEASE TRY AGAIN");
         }
+
         boardArray = noEditsToValidInput(boardArray, singleUserInput);
         BoardTableMapper.boardArrayToBoard(myBoard, boardArray);
     }
