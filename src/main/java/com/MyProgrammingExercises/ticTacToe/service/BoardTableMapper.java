@@ -74,4 +74,31 @@ public class BoardTableMapper {
 
     }
 
+    static void clearBoard(TicTacToeBoard board){
+        // ROW 1
+        board.getTextField1().setText("");
+        board.getTextField1().setEditable(true);
+        board.getTextField2().setText("");
+        board.getTextField2().setEditable(true);
+        board.getTextField3().setText("");
+        board.getTextField3().setEditable(true);
+
+        // ROW 2
+        board.getTextField4().setText("");
+        board.getTextField4().setEditable(true);
+        board.getTextField5().setText("");
+        board.getTextField5().setEditable(true);
+        board.getTextField6().setText("");
+        board.getTextField6().setEditable(true);
+
+        // ROW 3
+        board.getTextField7().setText("");
+        board.getTextField7().setEditable(true);
+        board.getTextField8().setText("");
+        board.getTextField8().setEditable(true);
+        board.getTextField9().setText("");
+        board.getTextField9().setEditable(true);
+
+    }
+
 }

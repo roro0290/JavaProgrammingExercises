@@ -121,4 +121,10 @@ public class UtilMethods {
         boardArray = inputIsValid(boardArray, singleUserInput);
         BoardTableMapper.boardArrayToBoard(myBoard, boardArray);
     }
+
+    public static TicTacToeBoard playerClickedReset(TicTacToeBoard myBoard){
+        boardArray = new UserInput[3][3];
+        BoardTableMapper.clearBoard(myBoard);
+        return myBoard;
+    }
 }

@@ -21,21 +21,22 @@ Flow:
 
 public class MainRunner {
 
-    @Autowired
-    static UtilMethods utilMethods;
     static int playerTurnCount = 0;
 
     public static void main(String[] args) {
 
         TicTacToeBoard myBoard = new TicTacToeBoard();
-        utilMethods.displayMethod(myBoard);
+        UtilMethods.displayMethod(myBoard);
 
+        /*
+        Call util method playerClickedSubmit when player clicks submit button
+         */
         myBoard.getSubmit().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
                     playerTurnCount+=1;
-                    utilMethods.playerClickedSubmit(myBoard, playerTurnCount);
+                    UtilMethods.playerClickedSubmit(myBoard, playerTurnCount);
                 }catch(NoInputFromPlayer noInputFromPlayerException){
                     // logging
                 }catch(MoreThanOneInputFromPlayer moreThanOneInputFromPlayerException){
@@ -44,6 +45,18 @@ public class MainRunner {
                     // logging
                 }
 
+            }
+        });
+
+        /*
+        Reset the board: clear all values & set editable to true
+         */
+        myBoard.getResetBtn().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                playerTurnCount=0;
+                UtilMethods.playerClickedReset(myBoard);
+                UtilMethods.displayMethod(myBoard);
             }
         });
     }
