@@ -5,6 +5,7 @@ import com.MyProgrammingExercises.ticTacToe.exception.MoreThanOneInputFromPlayer
 import com.MyProgrammingExercises.ticTacToe.exception.NoInputFromPlayer;
 import com.MyProgrammingExercises.ticTacToe.exception.WrongInputFormat;
 import com.MyProgrammingExercises.ticTacToe.model.UserInput;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ public class UtilMethods {
 
     static UserInput[][] boardArray;
 
-    static int validInputCount = 0;
+    static int playerTurn = 0;
 
     public static void displayMethod(TicTacToeBoard myBoard){
         myBoard.setContentPane(myBoard.getMainPanel());
@@ -55,7 +56,7 @@ public class UtilMethods {
     Method to check that input format is either X or O (ignore case)
      */
     static void checkInputFormatIsCorrect(TicTacToeBoard myBoard, UserInput singleUserInput){
-        boolean correctFormat = singleUserInput.getInputValue().equalsIgnoreCase("X") || singleUserInput.getInputValue().equalsIgnoreCase("O");
+        boolean correctFormat = playerTurn%2==0 ? singleUserInput.getInputValue().equalsIgnoreCase("X") : singleUserInput.getInputValue().equalsIgnoreCase("O");
         if(!correctFormat){
             throw new WrongInputFormat(myBoard.getDisplayMsg());
         }
@@ -65,7 +66,7 @@ public class UtilMethods {
     This method is called only after the input is validated
     Store the boardArray with this value and that input cannot be changed anymore
      */
-    static UserInput[][] inputIsValid(UserInput[][] boardArray,UserInput singleUserInput){
+    static UserInput[][] noEditsToValidInput(UserInput[][] boardArray,UserInput singleUserInput){
         switch (singleUserInput.getPosition()){
             case 1: {
                 boardArray[0][0].setEditable(false);
@@ -104,7 +105,7 @@ public class UtilMethods {
                 break;
             }
         }//end switch
-        validInputCount+=1;
+        playerTurn+=1;
         return boardArray;
     }
 
@@ -118,18 +119,75 @@ public class UtilMethods {
         boardArray = BoardTableMapper.mapBoardToBoardArray(myBoard,boardArray);
         UserInput singleUserInput = checkNumOfInputFromPlayer(myBoard,boardArray);
         checkInputFormatIsCorrect(myBoard,singleUserInput);
-        boardArray = inputIsValid(boardArray, singleUserInput);
-        if(validInputCount%2==0){
+        myBoard.getDisplayMsg().setText(""); // no error message
+        if(playerTurn%2!=0){
             myBoard.getPlayerTurn().setText("Player 1, please input X");
         }else{
             myBoard.getPlayerTurn().setText("Player 2, please input O");
         }
+        if(playerTurn>=4 && checkForWinner(boardArray)){
+            if(playerTurn%2==0){
+                myBoard.getPlayerTurn().setText("Player 1");
+            }else{
+                myBoard.getPlayerTurn().setText("Player 2");
+            }
+            myBoard.getDisplayMsg().setText("GAME WON");
+        }
+        boardArray = noEditsToValidInput(boardArray, singleUserInput);
         BoardTableMapper.boardArrayToBoard(myBoard, boardArray);
     }
 
     public static TicTacToeBoard playerClickedReset(TicTacToeBoard myBoard){
         boardArray = new UserInput[3][3];
         BoardTableMapper.clearBoard(myBoard);
+        myBoard.getDisplayMsg().setText("");
+        myBoard.getPlayerTurn().setText("Player 1, please enter X");
+        playerTurn = 0;
         return myBoard;
+    }
+
+    // return statement in each condition so that it does not continue evaluating
+    static boolean checkForWinner(UserInput[][] boardArray){
+
+        // check horizontal
+        for(int i=0;i<3;i++){
+            if(compareString(boardArray[i][0],boardArray[i][1])){
+                if(compareString(boardArray[i][1],boardArray[i][2])){
+                    return true;
+                }
+            }
+        }
+
+        // check vertical
+        for(int i=0;i<3;i++){
+            if(compareString(boardArray[0][i],boardArray[1][i])){
+                if(compareString(boardArray[1][i],boardArray[2][i])){
+                    return true;
+                }
+            }
+        }
+
+        //check diagonal
+        if(compareString(boardArray[0][0],boardArray[1][1])){
+            if(compareString(boardArray[1][1],boardArray[2][2])){
+                return true;
+            }
+        }
+
+        // check reverse diagonal
+        if(compareString(boardArray[0][2],boardArray[1][1])){
+            if(compareString(boardArray[1][1],boardArray[2][0])){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    static boolean compareString(UserInput a, UserInput b){
+        if(a.getInputValue().isEmpty()||b.getInputValue().isEmpty()){
+            return false;
+        }
+        return a.getInputValue().equalsIgnoreCase(b.getInputValue());
     }
 }
