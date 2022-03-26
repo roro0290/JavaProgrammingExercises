@@ -29,6 +29,11 @@ public class MainRunner {
         UtilMethods.displayMethod(myBoard);
 
         /*
+        When press enter, default submit button action
+         */
+        myBoard.getMainPanel().getRootPane().setDefaultButton(myBoard.getSubmit());
+
+        /*
         Call util method playerClickedSubmit when player clicks submit button
          */
         myBoard.getSubmit().addActionListener(new ActionListener() {
