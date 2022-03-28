@@ -1,0 +1,16 @@
+GAME FLOW:
+
+1. User enters a value
+- check if it is a valid X or O
+- only one input allowed
+2. If input is valid
+- value is saved to array
+- board becomes non-editable for that spot
+3. If input is invalid
+- exception is thrown. The board-displayMsg object is sent to the exception
+- within exception, it will set the value
+- "please enter only one value"
+- "you have provided the wrong format"
+4. After 4 moves are played
+- board will check for winner by using cases
+
