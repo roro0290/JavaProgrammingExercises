@@ -1,0 +1,21 @@
+Guess-the-Number
+
+1. The system generates a random number from a given range, say 1 to 100
+2. The user is prompted to enter their given number in a displayed dialogue box
+3. The computer then tells if the entered number matches, or is higher/lower than the generated number
+4.The game continues under the user guessing the number
+Further details as:
+- Limiting the number of attempts
+- Adding more rounds
+- Displaying score
+- Giving points based on the number of attempts
+--> to request for extra clue but the points will be deducted
+--> e.g. each attempt = 10 points, each clue = 5 points (lower the number, better the result)
+
+Reference Source: https://hackr.io/blog/java-projects
+
+For this project, we will use
+1. HTML + CSS to create the interface
+- buttons: guess, give up (show the answer), play again (clear the input and generate a new random number)
+2. AJAX to send the data to the controller
+3. Controller will forward to service
